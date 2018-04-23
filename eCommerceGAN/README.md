@@ -78,4 +78,4 @@ eCommerceGAN : A Generative Adversarial Network for E-commerce [paper](https://a
 	1. J(R) = || Pj - Pj~ ||, generator에 입력으로 들어가는 제품 벡터와 생성된 제품 벡터의 Euclidean distance
 	1. ec2GAN의 loss는 aJ(G)W + (1 - a)J(R), a는 튜닝 파라미터
 
-# ec2GAN의 활용
+## ec2GAN의 활용
