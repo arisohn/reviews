@@ -79,3 +79,32 @@ eCommerceGAN : A Generative Adversarial Network for E-commerce [paper](https://a
 	1. ec2GAN의 loss는 aJ(G)W + (1 - a)J(R), a는 튜닝 파라미터
 
 ## ec2GAN의 활용
+1. [figure 3]
+	1. 제품의 embedding 벡터를 구한다.
+	1. 제품의 embedding 벡터와 노이즈벡터를 결합하여 ec2GAN에 넣는다. 1,000개의 주문 데이터를 생성하기 위하여 1,000개의 랜덤 노이즈 벡터를 ec2GAN에 입력하면, 서로 다른 1,000개의 주문 데이터가 생성된다.
+	1. 생성된 주문데이터를 분류하여 고객의 성향(성별, 기간, 구매크기), 가격, 계절적인 구매수요 등을 찾아낼 수 있다.
+
+## 실험
+1. 데이터셋
+	1. 지난 1년간 주문 중 임의로 선정한 5백만 주문데이터 {customer, product, price, date}
+1. 알아낸 사실들
+	1. discriminator와 generator의 hidden layer의 개수를 조정하면서 실험을 해 보았는데, 2개의 hidden layer가 가장 좋았다.
+	1. 노이즈 벡터의 차원을 {32, 64, 96, 128}로 테스트 해 보았는데, 96차원의 노이즈 벡터가 가장 안정적이고 정확한 모형을 학습할 수 있었다.
+	1. Logistic Regression으로 실제 주문과 GAN이 생성해 낸 주문을 구분하게 해 보았는데, 정확도가 50%를 보였다.
+	1. ecGAN, ec2GAN의 세부 파라미터
+		1. Generator(2개의 hidden layer): 96(ecGAN), 96+128=224(ec2GAN) -> 64 -> 128 -> 264
+		1. Discriminator(2개의 hidden layer): 264 -> 128 -> 64 -> 1
+		1. alpha: 0.75
+		1. beta(adam optimizer): 0.6
+		1. discriminator와 generator가 학습된 횟수의비율 = 5 : 1
+		1. Minibatch 크기: 128
+		1. (5백만 주문데이터가) 수렴하기까지의 epoch수: 15
+1. ecGAN qualitative analysis: 사진이나 음악과 다르게 주문데이터가 그럴듯하게 생성되었는지는 감각에 의하여 확인할 수 없기 때문에 다음과 같이 3가지 방법으로 간접적으로 확인하였다.
+	1. t-SNE: [figure 4] 차원축소를 해서 보니 비슷해 보인다.
+	1. feature correlation: 각 주문은 264개의 feature가 있는데, 임의의 3개의 feature {f1, f2, f3} 을 선택하여 실제 데이터에서 corr(f1, f2) > corr(f1, f3) 인 경우 GAN에 의하여 생성된 데이터도 동일한 feature에 대하여 corr(f1, f2) > corr(f1, f3)인지 확인하였다. 임의의 100K개의 {f1, f2, f3}를 선택하였을 때 correlation이 일치하는 비율이 77%를 보여 그럴듯한 데이터를 생성한 것으로 보인다(baseline 방법은 50%가 일치).
+	1. data distribution in random forest leaves: 가짜와 진짜 주문을 구분하는 random forest 모형을 학습.
+		1. random forest: 100개의 tree, maximum depth 5(각 tree의 leaf node는 32개)
+		1. 각 leaf 노드에서 'real-order-ratio'를 구하여 분포를 그려봄 [figure 5]
+		1. 분포의 중심이 0.57이므로 가짜 데이터가 그럴듯해 보인다.
+1. ec2GAN quantitative analysis
+	1. 
