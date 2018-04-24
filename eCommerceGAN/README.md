@@ -107,4 +107,6 @@ eCommerceGAN : A Generative Adversarial Network for E-commerce [paper](https://a
 		1. 각 leaf 노드에서 'real-order-ratio'를 구하여 분포를 그려봄 [figure 5]
 		1. 분포의 중심이 0.57이므로 가짜 데이터가 그럴듯해 보인다.
 1. ec2GAN quantitative analysis
-	1. 
+	1. GAN을 수치적으로 평가(quantitative evaluate)하는 것은 어렵다. 우리가 설계한 평가 방법을 finance, transportation, health-care, sports 등의 영역에도 비슷하게 적용할 수 있다. ec2GAN에는 노이즈와 함께 제품의 embedding 벡터가 generator에 들어가기 때문에 신상품이 나왔을 때, 이에 대한 고객의 반응을 예측하는데 활용할 수 있다. Relative Similarity Measure(RSM): quantitatively compare the generated orders and the real orders with respect to each characteristic. ec2GAN을 Conditional Variational Autoencoder(C-VAE)와 비교해 보겠다.
+	1. Baseline Order Generation Approach: C-VAE를 baseline으로 사용하겠다.
+	1. Relative Similarity Measure(RSM): 
