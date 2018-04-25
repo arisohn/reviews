@@ -132,4 +132,7 @@ eCommerceGAN : A Generative Adversarial Network for E-commerce [paper](https://a
 			1. Propensity score sti와 sgi를 성별 특징에 해당하는 RSM점수를 구할 떄 사용한다.
 			1. [table1] RSM점수를 구하면, 여성에 대하여 81.08%, 남성에 대하여 82.20%가 나온다. ec2GAN이 효과적으로 주문을 생성해냄을 확인하였다.
 		1. Price Characterization: 새로운 제품을 출시할 때 가격산출이 중요하다.[table 2]
-		1. Seasonal Demand Characterization 
+		1. Seasonal Demand Characterization [table 3]
+		1. Discussion 
+	1. ec2GAN: Distribution Comparison
+		1. 
