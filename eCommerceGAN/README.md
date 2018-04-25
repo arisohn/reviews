@@ -109,4 +109,27 @@ eCommerceGAN : A Generative Adversarial Network for E-commerce [paper](https://a
 1. ec2GAN quantitative analysis
 	1. GAN을 수치적으로 평가(quantitative evaluate)하는 것은 어렵다. 우리가 설계한 평가 방법을 finance, transportation, health-care, sports 등의 영역에도 비슷하게 적용할 수 있다. ec2GAN에는 노이즈와 함께 제품의 embedding 벡터가 generator에 들어가기 때문에 신상품이 나왔을 때, 이에 대한 고객의 반응을 예측하는데 활용할 수 있다. Relative Similarity Measure(RSM): quantitatively compare the generated orders and the real orders with respect to each characteristic. ec2GAN을 Conditional Variational Autoencoder(C-VAE)와 비교해 보겠다.
 	1. Baseline Order Generation Approach: C-VAE를 baseline으로 사용하겠다.
-	1. Relative Similarity Measure(RSM): 
+	1. Relative Similarity Measure(RSM): 아래 계층구조의 leaf node에 대하여 propensity score 를 계산한다. 이를 통하여 임의의 두 제품 pi, pj에 대하여 sti >= stj and sgi >= sgj 와 같이 일치를 보이는 주문들을 측정한다. 임의의 N개의 샘플쌍(10,000)에 대하여 실제와 생성한 주문 사이에 일치가 얼마나 있는지 확인해 보았다.
+		1. 논문에서 가정하는 계층구조
+			- Customer
+				- Gender
+					* Female
+					* Male
+				- Tenure
+					* High-tenured(more than five years)
+					* Medium-tenured(between two and five years)
+				- Purchase Volume
+					* High Purchasers
+					* Average Purchasers
+			- Price
+			- Seasonal Demand
+				- Summer(May, June, July, August)
+				- Winter(November, December, January, February)
+		1. Customer Characterization: 새로운 제품을 출시할 때, ec2GAN을 통하여 주문 데이터를 생성해낼 수 있기 때문에 이를 통하여 타겟이 되는 고객의 gender, age, tenure, purchase volume 등을 분석해 낼 수 있음.
+			1. 내부 설문이나 과거 데이터를 통하여 gender, age, tenure, purchase volume 등을 예측하는 모델을 학습시킨다. 예시) 성별을 구분하는 분류기를 만든다.
+			1. 제품 pi에 대하여, 지난 1년간의 구매기록을 가져와 누가 해당 제품을 구매했는지 파악한다. 예시) 이렇게 얻은 고객들({Ci})을 1번에서 생성한 분류기에 넣어서 성별 비율을 구한다. sti
+			1. 각 제품 pi의 embedding 벡터를 ec2GAN에 넣어서 1,000개의 고객을 생성해낸다. {C~i} 이 고객들 또한 1번의 분류기에 넣어서 성별 비율을 구한다. sgi
+			1. Propensity score sti와 sgi를 성별 특징에 해당하는 RSM점수를 구할 떄 사용한다.
+			1. [table1] RSM점수를 구하면, 여성에 대하여 81.08%, 남성에 대하여 82.20%가 나온다. ec2GAN이 효과적으로 주문을 생성해냄을 확인하였다.
+		1. Price Characterization: 새로운 제품을 출시할 때 가격산출이 중요하다.[table 2]
+		1. Seasonal Demand Characterization 
