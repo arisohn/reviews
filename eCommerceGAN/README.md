@@ -36,7 +36,7 @@ eCommerceGAN : A Generative Adversarial Network for E-commerce [paper](https://a
 		1. sum(word2vec(word) * IDF(word) for all word in title)
 		1. 결과 벡터는 128 차원이고 각 스칼라 값은 -1~1 사이의 값을 가진다.
 	1. customer embedding: 각각의 고객을 벡터에 embedding하기 위하여, Discriminative Multi-task Recurrent Neural Network(RNN)을 학습시킨다. 
-		1. [figure1 추가]
+		1. <p align="center"><img src="pics/figure1.png"></p>
 		1. 학습할 목표(multi-class classification task)
 			1. 구매할 다음 물품 그룹명(clothes, food, furniture, baby-products etc.)
 			1. 구매 가격
@@ -51,7 +51,8 @@ eCommerceGAN : A Generative Adversarial Network for E-commerce [paper](https://a
 		1. The first component captures the difference between the current date and a pre-decided epoch
 		1. 다음 2개의 컴포넌트는 day of the month
 		1. 다음 2개의 컴포넌트는 월을 표현한다.
-		1. 일자와 월의 circularity을 확보하기 위하여 unit circle(https://en.wikipedia.org/wiki/Unit_circle)위에 값을 표현 x = (sin(t), cos(t))
+		1. 일자와 월의 circularity을 확보하기 위하여 [unit circle](https://en.wikipedia.org/wiki/Unit_circle) 위에 값을 표현 x = (sin(t), cos(t))
+		<p align="center"><img src="pics/Unit_circle.svg"></p>
 		1. 각각의 feature들은 -1 ~ 1로 정규화한다.
 	1. 최종 벡터는 128 + 128 + 1 + 7 = 264 차원 벡터로 표현
 		1. 128 차원 고객 벡터
@@ -60,7 +61,7 @@ eCommerceGAN : A Generative Adversarial Network for E-commerce [paper](https://a
 		1. 7차원 구매 날짜 벡터
 
 ## ecGAN
-1. an order O : {Ci, Pj, pk, Dl}
+1. an order <img src="pics/eq0.png" height=20>는 <img src="pics/eq1.png" height=20>의 tuple이다.
 	- Ci
 	- Pj
 	- pk
