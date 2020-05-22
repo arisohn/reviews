@@ -16,6 +16,7 @@ eCommerceGAN : A Generative Adversarial Network for E-commerce [paper](https://a
   bibsource = {dblp computer science bibliography, https://dblp.org}
 }
 ```
+https://www.youtube.com/watch?v=DxS-uywhnzs
 
 # E-commerce GAN
 1. 한 줄 요약: 주문 데이터(물품명, 설명, 구매자, 가격, 일자 등)을 저차원의 벡터로 변환하여 GAN을 통하여 그럴듯 하다고 생각되는 주문 데이터를 생성해 낼 수 있다는 것을 적당한 통계적인 수치와 비교를 통하여 보인다.
